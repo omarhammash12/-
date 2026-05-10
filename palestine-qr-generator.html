@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مولّد باركود الدفع الفلسطيني</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --cream: #ede8da;
+    --green: #1a7a3c;
+    --green-light: #2da653;
+    --green-glow: #3dd670;
+    --red: #c0392b;
+    --gold: #d4a017;
+    --gold-light: #f0c040;
+    --gray: #1e1e1e;
+    --gray-mid: #2e2e2e;
+    --border: #333;
+    --text-dim: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: 'Cairo', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(26, 122, 60, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(192, 57, 43, 0.08) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper { position: relative; z-index: 1; }
+
+  /* ===== HEADER ===== */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    backdrop-filter: blur(20px);
+    background: rgba(10,10,10,0.85);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-flag {
+    width: 44px;
+    height: 28px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+
+  .flag-stripe { flex: 1; }
+  .flag-black { background: #000; }
+  .flag-white { background: #fff; }
+  .flag-green { background: #007a3d; }
+  .flag-red-tri {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  .logo-flag-svg {
+    width: 44px;
+    height: 28px;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -0.3px;
+    color: var(--white);
+  }
+
+  .logo-text span {
+    color: var(--green-glow);
+  }
+
+  .header-badge {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    text-align: center;
+    padding: 60px 40px 50px;
+    position: relative;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26, 122, 60, 0.15);
+    border: 1px solid rgba(26, 122, 60, 0.4);
+    color: var(--green-glow);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green-glow);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--green-glow);
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  .hero h1 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--green-light), var(--green-glow), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* ===== PAYMENT PROVIDERS ===== */
+  .providers-bar {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 0 40px 40px;
+    flex-wrap: wrap;
+  }
+
+  .provider-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .provider-badge:hover {
+    border-color: var(--green-light);
+    background: rgba(26, 122, 60, 0.1);
+  }
+
+  .provider-badge.active {
+    border-color: var(--green-glow);
+    background: rgba(61, 214, 112, 0.1);
+    color: var(--green-glow);
+    box-shadow: 0 0 20px rgba(61, 214, 112, 0.15);
+  }
+
+  .provider-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .palbpay-icon { background: linear-gradient(135deg, #1a7a3c, #2da653); color: white; }
+  .jawwal-icon { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
+  .bank-icon { background: linear-gradient(135deg, #2c3e50, #3498db); color: white; }
+
+  /* ===== MAIN LAYOUT ===== */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+  }
+
+  /* ===== FORM PANEL ===== */
+  .form-panel {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .panel-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .panel-title-icon {
+    width: 36px; height: 36px;
+    background: rgba(26, 122, 60, 0.2);
+    border: 1px solid rgba(26, 122, 60, 0.4);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  /* Provider Selector */
+  .provider-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .provider-card {
+    background: var(--gray-mid);
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 14px 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .provider-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .provider-card:hover { border-color: rgba(61,214,112,0.3); }
+
+  .provider-card.selected {
+    border-color: var(--green-glow);
+    background: rgba(61, 214, 112, 0.06);
+    box-shadow: 0 0 24px rgba(61, 214, 112, 0.12), inset 0 0 20px rgba(61, 214, 112, 0.04);
+  }
+
+  .provider-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 18px; height: 18px;
+    background: var(--green-glow);
+    color: #000;
+    border-radius: 50%;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+  }
+
+  .pc-logo {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .pc-logo.palpal { background: linear-gradient(135deg, #1a7a3c, #3dd670); }
+  .pc-logo.jawwal { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+  .pc-logo.bank { background: linear-gradient(135deg, #1a3a6e, #2980b9); }
+
+  .pc-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .pc-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* Form Fields */
+  .field-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .field-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .field-prefix {
+    position: absolute;
+    right: 14px;
+    color: var(--text-dim);
+    font-size: 14px;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .field-suffix {
+    position: absolute;
+    left: 14px;
+    color: var(--green-glow);
+    font-size: 14px;
+    font-weight: 700;
+    pointer-events: none;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    padding: 14px 44px 14px 16px;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.2s ease;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--green-light);
+    box-shadow: 0 0 0 3px rgba(26, 122, 60, 0.15);
+  }
+
+  input[type="number"] { padding-left: 52px; }
+
+  input::placeholder { color: #555; }
+
+  select {
+    cursor: pointer;
+    padding-right: 44px;
+  }
+
+  select option {
+    background: #1e1e1e;
+    color: var(--white);
+  }
+
+  /* Amount presets */
+  .amount-presets {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .preset-btn {
+    background: var(--gray-mid);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .preset-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(212, 160, 23, 0.08);
+  }
+
+  /* Note input */
+  textarea {
+    resize: none;
+    padding: 14px 16px;
+    min-height: 80px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ===== GENERATE BUTTON ===== */
+  .generate-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.3px;
+    box-shadow: 0 8px 24px rgba(26, 122, 60, 0.3);
+  }
+
+  .generate-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 122, 60, 0.4);
+  }
+
+  .generate-btn:hover::before { opacity: 1; }
+
+  .generate-btn:active { transform: translateY(0); }
+
+  .generate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ===== QR PANEL ===== */
+  .qr-panel {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .qr-display-area {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .qr-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    color: var(--text-dim);
+  }
+
+  .qr-placeholder-icon {
+    width: 80px; height: 80px;
+    border: 2px dashed #333;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    opacity: 0.5;
+    position: relative;
+  }
+
+  /* Placeholder QR grid effect */
+  .qr-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .qr-placeholder-text {
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* Generated QR */
+  .qr-generated {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .qr-code-wrap {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    position: relative;
+  }
+
+  .qr-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--green-glow);
+    border-style: solid;
+  }
+  .qr-corner.tl { top: -2px; right: -2px; border-width: 3px 0 0 3px; border-radius: 0 0 0 4px; }
+  .qr-corner.tr { top: -2px; left: -2px; border-width: 3px 3px 0 0; border-radius: 0 0 4px 0; }
+  .qr-corner.bl { bottom: -2px; right: -2px; border-width: 0 0 3px 3px; border-radius: 0 4px 0 0; }
+  .qr-corner.br { bottom: -2px; left: -2px; border-width: 0 3px 3px 0; border-radius: 4px 0 0 0; }
+
+  #qrcode canvas, #qrcode img {
+    display: block;
+    border-radius: 8px;
+  }
+
+  .qr-info-card {
+    width: 100%;
+    background: var(--gray-mid);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .qr-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .qr-info-label { color: var(--text-dim); font-weight: 500; }
+  .qr-info-value { color: var(--white); font-weight: 700; }
+  .qr-info-value.green { color: var(--green-glow); }
+  .qr-info-value.gold { color: var(--gold-light); }
+
+  /* Short URL display */
+  .short-url-box {
+    width: 100%;
+    background: rgba(26, 122, 60, 0.08);
+    border: 1px solid rgba(26, 122, 60, 0.3);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .short-url-text {
+    font-size: 13px;
+    color: var(--green-glow);
+    font-weight: 600;
+    word-break: break-all;
+    direction: ltr;
+    text-align: left;
+  }
+
+  .copy-btn {
+    background: rgba(61, 214, 112, 0.15);
+    border: 1px solid rgba(61, 214, 112, 0.3);
+    color: var(--green-glow);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .copy-btn:hover { background: rgba(61, 214, 112, 0.25); }
+  .copy-btn.copied { color: #fff; background: var(--green); }
+
+  /* Action buttons */
+  .qr-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .action-btn {
+    padding: 12px;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+  }
+
+  .btn-download {
+    background: var(--green);
+    color: white;
+    box-shadow: 0 4px 16px rgba(26, 122, 60, 0.3);
+  }
+  .btn-download:hover { background: var(--green-light); transform: translateY(-1px); }
+
+  .btn-share {
+    background: var(--gray-mid);
+    color: var(--white);
+    border: 1px solid var(--border);
+  }
+  .btn-share:hover { border-color: var(--green-light); color: var(--green-glow); }
+
+  /* ===== HISTORY SECTION ===== */
+  .history-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-badge {
+    background: rgba(26, 122, 60, 0.15);
+    border: 1px solid rgba(26, 122, 60, 0.3);
+    color: var(--green-glow);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .clear-btn {
+    background: transparent;
+    border: 1px solid rgba(192, 57, 43, 0.3);
+    color: var(--red);
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .clear-btn:hover { background: rgba(192, 57, 43, 0.1); }
+
+  .history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .history-card {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    animation: card-in 0.3s ease;
+  }
+
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .history-card:hover {
+    border-color: rgba(61, 214, 112, 0.3);
+    background: rgba(61, 214, 112, 0.04);
+  }
+
+  .history-qr-mini {
+    width: 64px; height: 64px;
+    background: white;
+    border-radius: 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .history-qr-mini canvas, .history-qr-mini img {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .history-info { flex: 1; min-width: 0; }
+
+  .history-provider {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .hist-provider-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  .hist-palbpay { background: var(--green-glow); }
+  .hist-jawwal { background: #e74c3c; }
+  .hist-bank { background: #3498db; }
+
+  .history-provider-name { font-size: 12px; font-weight: 700; color: var(--text-dim); }
+
+  .history-phone {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    direction: ltr;
+    text-align: right;
+    margin-bottom: 2px;
+  }
+
+  .history-amount {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold-light);
+  }
+
+  .history-time {
+    font-size: 11px;
+    color: #555;
+    margin-top: 2px;
+  }
+
+  .history-empty {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-dim);
+    font-size: 15px;
+    border: 1px dashed #333;
+    border-radius: 16px;
+    grid-column: 1 / -1;
+  }
+
+  .history-empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+
+  /* ===== INFO CARDS ===== */
+  .info-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .info-card {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .info-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  .ic-green { background: rgba(26, 122, 60, 0.2); border: 1px solid rgba(26,122,60,0.3); }
+  .ic-gold { background: rgba(212, 160, 23, 0.2); border: 1px solid rgba(212,160,23,0.3); }
+  .ic-blue { background: rgba(52, 152, 219, 0.2); border: 1px solid rgba(52,152,219,0.3); }
+
+  .info-card h3 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .info-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  footer span { color: var(--green-glow); }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--green);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ===== LOADING ===== */
+  .loading-spinner {
+    width: 20px; height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    header { padding: 0 20px; }
+    .hero { padding: 40px 20px 30px; }
+    .providers-bar { padding: 0 20px 30px; }
+    .main-layout { grid-template-columns: 1fr; padding: 0 20px 40px; }
+    .info-section { grid-template-columns: 1fr; padding: 0 20px 60px; }
+    .history-section { padding: 0 20px 40px; }
+    .provider-grid { grid-template-columns: repeat(3, 1fr); }
+    footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <svg class="logo-flag-svg" viewBox="0 0 44 28" xmlns="http://www.w3.org/2000/svg">
+        <rect width="44" height="9.33" fill="#000"/>
+        <rect y="9.33" width="44" height="9.33" fill="#fff"/>
+        <rect y="18.66" width="44" height="9.34" fill="#007a3d"/>
+        <polygon points="0,0 18,14 0,28" fill="#ce1126"/>
+      </svg>
+      <div class="logo-text">بارك<span>كود</span> فلسطين</div>
+    </div>
+    <div class="header-badge">🇵🇸 خدمة الدفع الفلسطيني</div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">✦ منشئ QR للدفع الفوري</div>
+    <h1>أنشئ باركود الدفع<br><em>بضغطة واحدة</em></h1>
+    <p>أنشئ رموز QR احترافية لمحافظ الدفع الفلسطينية — PalPay وJawwal Pay وبنك فلسطين — بسهولة وسرعة</p>
+  </section>
+
+  <!-- MAIN FORM + QR -->
+  <div class="main-layout">
+
+    <!-- FORM PANEL -->
+    <div class="form-panel">
+      <div class="panel-title">
+        <div class="panel-title-icon">📋</div>
+        بيانات الدفع
+      </div>
+
+      <!-- Provider Selection -->
+      <div class="provider-selector">
+        <div class="field-label">اختر جهة الدفع</div>
+        <div class="provider-grid">
+          <div class="provider-card selected" onclick="selectProvider('palbpay', this)">
+            <div class="pc-logo palpal">P</div>
+            <div class="pc-name">PalPay</div>
+            <div class="pc-sub">بال باي</div>
+          </div>
+          <div class="provider-card" onclick="selectProvider('jawwal', this)">
+            <div class="pc-logo jawwal">J</div>
+            <div class="pc-name">Jawwal Pay</div>
+            <div class="pc-sub">جوال بي</div>
+          </div>
+          <div class="provider-card" onclick="selectProvider('bank', this)">
+            <div class="pc-logo bank">🏦</div>
+            <div class="pc-name">Bank of Palestine</div>
+            <div class="pc-sub">بنك فلسطين</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="field-group">
+        <div class="field-label">رقم الهاتف / الحساب</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">📱</span>
+          <input type="tel" id="phoneInput" placeholder="05XXXXXXXX" maxlength="15" dir="ltr" style="text-align:right; padding-right:44px; padding-left:16px;">
+        </div>
+      </div>
+
+      <!-- Amount -->
+      <div class="field-group">
+        <div class="field-label">المبلغ</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">₪</span>
+          <span class="field-suffix">ILS</span>
+          <input type="number" id="amountInput" placeholder="0.00" min="0" step="0.01" dir="ltr" style="text-align:right;">
+        </div>
+        <div class="amount-presets">
+          <button class="preset-btn" onclick="setAmount(10)">₪10</button>
+          <button class="preset-btn" onclick="setAmount(20)">₪20</button>
+          <button class="preset-btn" onclick="setAmount(50)">₪50</button>
+          <button class="preset-btn" onclick="setAmount(100)">₪100</button>
+          <button class="preset-btn" onclick="setAmount(200)">₪200</button>
+          <button class="preset-btn" onclick="setAmount(500)">₪500</button>
+        </div>
+      </div>
+
+      <!-- Note (optional) -->
+      <div class="field-group">
+        <div class="field-label">ملاحظة (اختياري)</div>
+        <textarea id="noteInput" placeholder="سبب الدفع أو ملاحظة للمرسل..."></textarea>
+      </div>
+
+      <!-- QR Size -->
+      <div class="field-group">
+        <div class="field-label">حجم الباركود</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">📐</span>
+          <select id="sizeSelect" style="padding-right:44px; padding-left:16px;">
+            <option value="160">صغير — 160×160</option>
+            <option value="220" selected>متوسط — 220×220</option>
+            <option value="300">كبير — 300×300</option>
+            <option value="400">ضخم — 400×400</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Error Correction -->
+      <div class="field-group">
+        <div class="field-label">جودة تصحيح الخطأ</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">🔒</span>
+          <select id="eclSelect" style="padding-right:44px; padding-left:16px;">
+            <option value="L">منخفضة (L) — أصغر حجم</option>
+            <option value="M" selected>متوسطة (M) — موصى بها</option>
+            <option value="Q">عالية (Q)</option>
+            <option value="H">أعلى (H) — أقوى حماية</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Generate Button -->
+      <button class="generate-btn" id="generateBtn" onclick="generateQR()">
+        <span id="btnText">⚡ أنشئ الباركود الآن</span>
+        <div class="loading-spinner" id="btnSpinner"></div>
+      </button>
+    </div>
+
+    <!-- QR PANEL -->
+    <div class="qr-panel">
+      <div class="panel-title">
+        <div class="panel-title-icon">📷</div>
+        الباركود المُنشأ
+      </div>
+
+      <div class="qr-display-area" id="qrDisplayArea">
+        <div class="qr-grid-bg"></div>
+        <div class="qr-placeholder" id="qrPlaceholder">
+          <div class="qr-placeholder-icon">▣</div>
+          <div class="qr-placeholder-text">
+            أدخل بيانات الدفع وانقر<br>
+            <strong style="color:var(--green-glow)">أنشئ الباركود</strong>
+          </div>
+        </div>
+
+        <div class="qr-generated" id="qrGenerated">
+          <div class="qr-code-wrap" id="qrCodeWrap">
+            <div class="qr-corner tl"></div>
+            <div class="qr-corner tr"></div>
+            <div class="qr-corner bl"></div>
+            <div class="qr-corner br"></div>
+            <div id="qrcode"></div>
+          </div>
+
+          <div class="qr-info-card" id="qrInfoCard">
+            <div class="qr-info-row">
+              <span class="qr-info-label">جهة الدفع</span>
+              <span class="qr-info-value green" id="infoProvider">—</span>
+            </div>
+            <div class="qr-info-row">
+              <span class="qr-info-label">رقم الهاتف</span>
+              <span class="qr-info-value" id="infoPhone" dir="ltr">—</span>
+            </div>
+            <div class="qr-info-row">
+              <span class="qr-info-label">المبلغ</span>
+              <span class="qr-info-value gold" id="infoAmount">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Short URL -->
+      <div class="short-url-box" id="shortUrlBox" style="display:none;">
+        <div class="short-url-text" id="shortUrlText">—</div>
+        <button class="copy-btn" id="copyBtn" onclick="copyShortUrl()">نسخ</button>
+      </div>
+
+      <!-- Actions -->
+      <div class="qr-actions" id="qrActions" style="display:none;">
+        <button class="action-btn btn-download" onclick="downloadQR()">
+          ⬇ تنزيل PNG
+        </button>
+        <button class="action-btn btn-share" onclick="shareQR()">
+          ↗ مشاركة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <section class="history-section">
+    <div class="section-header">
+      <div class="section-title">
+        📁 السجل الأخير
+        <span class="section-badge" id="historyCount">0</span>
+      </div>
+      <button class="clear-btn" onclick="clearHistory()">مسح الكل</button>
+    </div>
+    <div class="history-grid" id="historyGrid">
+      <div class="history-empty">
+        <div class="history-empty-icon">📂</div>
+        لم تُنشئ أي باركود بعد.<br>ابدأ بإدخال بيانات الدفع!
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO CARDS -->
+  <section class="info-section">
+    <div class="info-card">
+      <div class="info-card-icon ic-green">🛡️</div>
+      <h3>آمن وموثوق</h3>
+      <p>جميع البيانات تُعالج محلياً على جهازك. لا يتم إرسال أي معلومات لخوادم خارجية.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon ic-gold">⚡</div>
+      <h3>فوري وسريع</h3>
+      <p>أنشئ باركود الدفع في أقل من ثانية وشاركه مع أي شخص عبر الرسائل أو البريد الإلكتروني.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon ic-blue">📲</div>
+      <h3>متوافق مع جميع الأجهزة</h3>
+      <p>يعمل الباركود مع تطبيقات PalPay وJawwal Pay وبنك فلسطين على iOS وAndroid.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>باركود فلسطين</span> — أداة مجانية لإنشاء رموز QR للمدفوعات الفلسطينية 🇵🇸
+  </footer>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// =============================================
+//  STATE
+// =============================================
+let selectedProvider = 'palbpay';
+let history = JSON.parse(localStorage.getItem('qr-history') || '[]');
+let currentQRData = null;
+
+const providerNames = {
+  palbpay: 'PalPay (بال باي)',
+  jawwal: 'Jawwal Pay (جوال بي)',
+  bank: 'بنك فلسطين'
+};
+
+const providerPrefixes = {
+  palbpay: 'palpay://',
+  jawwal: 'jawwalpay://',
+  bank: 'bop://'
+};
+
+// =============================================
+//  PROVIDER SELECTION
+// =============================================
+function selectProvider(name, el) {
+  selectedProvider = name;
+  document.querySelectorAll('.provider-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// =============================================
+//  AMOUNT PRESETS
+// =============================================
+function setAmount(val) {
+  document.getElementById('amountInput').value = val;
+}
+
+// =============================================
+//  GENERATE QR
+// =============================================
+function generateQR() {
+  const phone = document.getElementById('phoneInput').value.trim();
+  const amount = document.getElementById('amountInput').value.trim();
+  const note = document.getElementById('noteInput').value.trim();
+  const size = parseInt(document.getElementById('sizeSelect').value);
+  const ecl = document.getElementById('eclSelect').value;
+
+  // Validation
+  if (!phone) { showToast('❗ الرجاء إدخال رقم الهاتف', '#c0392b'); return; }
+  if (!amount || parseFloat(amount) <= 0) { showToast('❗ الرجاء إدخال مبلغ صحيح', '#c0392b'); return; }
+
+  // Build QR data string (deep link format)
+  const prefix = providerPrefixes[selectedProvider];
+  let qrData = `${prefix}pay?phone=${encodeURIComponent(phone)}&amount=${amount}&currency=ILS`;
+  if (note) qrData += `&note=${encodeURIComponent(note)}`;
+
+  // Show loading
+  const btn = document.getElementById('generateBtn');
+  const btnText = document.getElementById('btnText');
+  const spinner = document.getElementById('btnSpinner');
+  btn.disabled = true;
+  btnText.style.display = 'none';
+  spinner.style.display = 'block';
+
+  setTimeout(() => {
+    // Clear old QR
+    const qrEl = document.getElementById('qrcode');
+    qrEl.innerHTML = '';
+
+    // Generate
+    try {
+      const qr = new QRCode(qrEl, {
+        text: qrData,
+        width: size,
+        height: size,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel[ecl]
+      });
+    } catch(e) {
+      showToast('حدث خطأ في إنشاء الباركود', '#c0392b');
+      btn.disabled = false;
+      btnText.style.display = 'block';
+      spinner.style.display = 'none';
+      return;
+    }
+
+    // Update UI
+    currentQRData = { phone, amount, note, provider: selectedProvider, qrData, size, ecl };
+
+    document.getElementById('qrPlaceholder').style.display = 'none';
+    document.getElementById('qrGenerated').style.display = 'flex';
+    document.getElementById('infoProvider').textContent = providerNames[selectedProvider];
+    document.getElementById('infoPhone').textContent = phone;
+    document.getElementById('infoAmount').textContent = `₪${parseFloat(amount).toFixed(2)}`;
+
+    // Short URL (simulated)
+    const shortCode = generateShortCode(phone, amount, selectedProvider);
+    const shortUrl = `https://qr.ps/${shortCode}`;
+    document.getElementById('shortUrlText').textContent = shortUrl;
+    document.getElementById('shortUrlBox').style.display = 'flex';
+    document.getElementById('qrActions').style.display = 'grid';
+
+    // Reset copy btn
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.textContent = 'نسخ';
+    copyBtn.classList.remove('copied');
+
+    // Add to history
+    addToHistory({ phone, amount, note, provider: selectedProvider, time: Date.now() });
+
+    // Reset btn
+    btn.disabled = false;
+    btnText.style.display = 'block';
+    spinner.style.display = 'none';
+
+    showToast('✅ تم إنشاء الباركود بنجاح!');
+
+  }, 400);
+}
+
+// =============================================
+//  SHORT CODE GENERATOR
+// =============================================
+function generateShortCode(phone, amount, provider) {
+  const pMap = { palbpay: 'pp', jawwal: 'jp', bank: 'bp' };
+  const pCode = pMap[provider] || 'xx';
+  const digits = phone.replace(/\D/g, '').slice(-4);
+  const amtCode = Math.round(parseFloat(amount)).toString(36).toUpperCase();
+  const rand = Math.random().toString(36).substring(2,5).toUpperCase();
+  return `${pCode}${digits}${amtCode}${rand}`;
+}
+
+// =============================================
+//  COPY SHORT URL
+// =============================================
+function copyShortUrl() {
+  const url = document.getElementById('shortUrlText').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ تم';
+    btn.classList.add('copied');
+    showToast('تم نسخ الرابط المختصر!');
+    setTimeout(() => {
+      btn.textContent = 'نسخ';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = url;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('تم نسخ الرابط!');
+  });
+}
+
+// =============================================
+//  DOWNLOAD QR
+// =============================================
+function downloadQR() {
+  const canvas = document.querySelector('#qrcode canvas');
+  const img = document.querySelector('#qrcode img');
+
+  if (canvas) {
+    const link = document.createElement('a');
+    const phone = currentQRData ? currentQRData.phone : 'qr';
+    const prov = currentQRData ? currentQRData.provider : 'pay';
+    link.download = `QR_${prov}_${phone}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast('⬇ جارٍ تنزيل الباركود...');
+  } else if (img) {
+    const link = document.createElement('a');
+    link.download = 'qrcode.png';
+    link.href = img.src;
+    link.click();
+    showToast('⬇ جارٍ تنزيل الباركود...');
+  } else {
+    showToast('لم يتم إنشاء باركود بعد', '#c0392b');
+  }
+}
+
+// =============================================
+//  SHARE QR
+// =============================================
+function shareQR() {
+  if (!currentQRData) { showToast('أنشئ باركوداً أولاً', '#c0392b'); return; }
+  const text = `💳 طلب دفع عبر ${providerNames[currentQRData.provider]}\n📱 ${currentQRData.phone}\n💰 ₪${parseFloat(currentQRData.amount).toFixed(2)}${currentQRData.note ? '\n📝 ' + currentQRData.note : ''}`;
+
+  if (navigator.share) {
+    navigator.share({ title: 'طلب دفع فلسطيني', text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => showToast('تم نسخ تفاصيل الدفع!'));
+  }
+}
+
+// =============================================
+//  HISTORY
+// =============================================
+function addToHistory(entry) {
+  history.unshift(entry);
+  if (history.length > 20) history = history.slice(0, 20);
+  localStorage.setItem('qr-history', JSON.stringify(history));
+  renderHistory();
+}
+
+function renderHistory() {
+  const grid = document.getElementById('historyGrid');
+  const badge = document.getElementById('historyCount');
+  badge.textContent = history.length;
+
+  if (history.length === 0) {
+    grid.innerHTML = `
+      <div class="history-empty">
+        <div class="history-empty-icon">📂</div>
+        لم تُنشئ أي باركود بعد.<br>ابدأ بإدخال بيانات الدفع!
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = '';
+  history.forEach((entry, idx) => {
+    const dotClass = `hist-${entry.provider}`;
+    const timeStr = formatTime(entry.time);
+    const card = document.createElement('div');
+    card.className = 'history-card';
+    card.innerHTML = `
+      <div class="history-qr-mini" id="hist-qr-${idx}"></div>
+      <div class="history-info">
+        <div class="history-provider">
+          <div class="hist-provider-dot ${dotClass}"></div>
+          <span class="history-provider-name">${providerNames[entry.provider]}</span>
+        </div>
+        <div class="history-phone">${entry.phone}</div>
+        <div class="history-amount">₪${parseFloat(entry.amount).toFixed(2)}</div>
+        <div class="history-time">${timeStr}</div>
+      </div>`;
+    card.onclick = () => restoreFromHistory(entry);
+    grid.appendChild(card);
+
+    // Mini QR
+    const pPrefix = providerPrefixes[entry.provider] || 'pay://';
+    const qrData = `${pPrefix}pay?phone=${encodeURIComponent(entry.phone)}&amount=${entry.amount}&currency=ILS`;
+    try {
+      new QRCode(document.getElementById(`hist-qr-${idx}`), {
+        text: qrData,
+        width: 64,
+        height: 64,
+        colorDark: '#000',
+        colorLight: '#fff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } catch(e) {}
+  });
+}
+
+function restoreFromHistory(entry) {
+  // Fill form
+  selectProvider(entry.provider, document.querySelectorAll('.provider-card')[
+    ['palbpay','jawwal','bank'].indexOf(entry.provider)
+  ]);
+  document.getElementById('phoneInput').value = entry.phone;
+  document.getElementById('amountInput').value = entry.amount;
+  document.getElementById('noteInput').value = entry.note || '';
+
+  // Scroll to form
+  document.querySelector('.main-layout').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showToast('✏️ تم تحميل البيانات');
+}
+
+function clearHistory() {
+  if (history.length === 0) return;
+  if (confirm('هل تريد مسح كل السجل؟')) {
+    history = [];
+    localStorage.setItem('qr-history', JSON.stringify(history));
+    renderHistory();
+    showToast('🗑️ تم مسح السجل');
+  }
+}
+
+function formatTime(ts) {
+  const d = new Date(ts);
+  const now = new Date();
+  const diff = now - d;
+  if (diff < 60000) return 'الآن';
+  if (diff < 3600000) return `منذ ${Math.floor(diff/60000)} دقيقة`;
+  if (diff < 86400000) return `منذ ${Math.floor(diff/3600000)} ساعة`;
+  return d.toLocaleDateString('ar-PS');
+}
+
+// =============================================
+//  TOAST
+// =============================================
+function showToast(msg, bg = '#1a7a3c') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = bg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// =============================================
+//  ENTER KEY
+// =============================================
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT')) {
+    generateQR();
+  }
+});
+
+// =============================================
+//  INIT
+// =============================================
+renderHistory();
+</script>
+</body>
+</html>
